@@ -1,0 +1,16 @@
+server:
+  port: 9002
+spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  application:
+    name: order
+
+rocketmq:
+  name-server: 127.0.0.1:9876
+  topic: distributed-cache-topic
+  producer:
+    group: distributed-cache-producer-group
+  consumer:
+    group: distributed-cache-consumer-group
