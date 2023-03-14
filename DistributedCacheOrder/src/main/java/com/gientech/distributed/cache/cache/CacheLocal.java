@@ -29,6 +29,7 @@ public class CacheLocal implements Cache{
         if(account != null){
             return account;
         }
+
         synchronized(this){
             account = accounts.get(userId);
             if(account != null){
