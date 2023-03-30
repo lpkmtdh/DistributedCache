@@ -31,4 +31,9 @@ public class OrderController {
         Order order = new Order(1L,userId,new Date(),100L);
         return orderService.createOrder(order);
     }
+
+    @GetMapping("/seata")
+    public Result<Order> createOrder3(@RequestParam("uid") Integer uid){
+        return orderService.createOrder3(uid);
+    }
 }

@@ -1,6 +1,7 @@
 package com.gientech.distributed.cache.controller;
 
 import com.gientech.distributed.cache.domain.Account;
+import com.gientech.distributed.cache.domain.User;
 import com.gientech.distributed.cache.pojo.Result;
 import com.gientech.distributed.cache.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,4 +46,11 @@ public class AccountController {
     public Result<Integer> deleteAccount(@RequestParam("userId") Integer userId){
         return accountService.deleteAccount(userId);
     }
+
+
+    @PostMapping("/user")
+    public Result<Integer> insertUser(@RequestBody User user){
+        return accountService.insertUser(user);
+    }
+
 }

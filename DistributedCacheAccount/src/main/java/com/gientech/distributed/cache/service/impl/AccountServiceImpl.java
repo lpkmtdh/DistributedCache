@@ -1,6 +1,8 @@
 package com.gientech.distributed.cache.service.impl;
 
+import com.gientech.distributed.cache.dao.UserMapper;
 import com.gientech.distributed.cache.domain.Account;
+import com.gientech.distributed.cache.domain.User;
 import com.gientech.distributed.cache.mq.CacheProducer;
 import com.gientech.distributed.cache.pojo.MqMessage;
 import com.gientech.distributed.cache.pojo.Result;
@@ -27,6 +29,9 @@ import java.util.concurrent.ConcurrentHashMap;
 public class AccountServiceImpl implements AccountService {
 
     private ConcurrentHashMap<Integer, Account> accounts = new ConcurrentHashMap<>();
+
+    @Autowired
+    private UserMapper userMapper;
         
     @Autowired
     private CacheProducer cacheProducer;
@@ -85,6 +90,15 @@ public class AccountServiceImpl implements AccountService {
         }
         mq("delete",userId);
         return accounts.remove(userId) != null ? Result.success(1) : Result.failed();
+    }
+
+    @Override
+    public Result<Integer> insertUser(User user) {
+        if(user == null || user.getId() == null || user.getId() %2 ==0){
+            throw new RuntimeException("尴尬了。。。");
+        }
+        int count = userMapper.insert(user);
+        return Result.success(count);
     }
 
     private void mq(String type, Integer userId) {

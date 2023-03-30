@@ -8,10 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 /**
- * @ClassName Order
+ * @ClassName User
  * @Description
  * @Author Kevin.Lian
  * @Date 2023-03-02 16:48
@@ -20,14 +18,13 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName(value = "t_order")
-public class Order {
-    @TableId(value = "orderId", type = IdType.AUTO)
-    private Long orderId;
-    @TableField(value = "userId")
-    private Integer userId;
-    @TableField(value = "orderTime")
-    private Date orderTime;
-    @TableField(value = "goodId")
-    private Long goodId;
+@TableName(value = "t_user")
+public class User {
+    @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
+    @TableField(value = "name")
+    private String name;
+
+    @TableField(value = "age")
+    private Integer age;
 }

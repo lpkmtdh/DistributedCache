@@ -1,5 +1,6 @@
 package com.gientech.distributed.cache.service;
 
+import com.gientech.distributed.cache.domain.User;
 import com.gientech.distributed.cache.pojo.Result;
 import com.gientech.distributed.cache.domain.Account;
 import org.springframework.web.bind.annotation.*;
@@ -17,4 +18,7 @@ public interface AccountService {
     Result<Integer> insertAccount(@RequestBody Account account);
     @DeleteMapping
     Result<Integer> deleteAccount(@RequestParam("userId")Integer userId);
+
+    @PostMapping("/account/user")
+    Result<Integer> insertUser(@RequestBody User user);
 }
