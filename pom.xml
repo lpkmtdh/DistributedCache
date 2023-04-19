@@ -20,6 +20,7 @@
     <module>DistributedCacheOrder</module>
       <module>DistributedCacheAccountApi</module>
       <module>DistributedCacheCommon</module>
+    <module>gateway</module>
   </modules>
 
   <properties>

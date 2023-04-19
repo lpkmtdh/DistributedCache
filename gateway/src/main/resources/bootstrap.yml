@@ -1,0 +1,26 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: api-gateway
+  jackson:
+      default-property-inclusion: non_null
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: order
+          uri: lb://order
+          predicates:
+            - Path=/api/order/**
+          filters:
+            - StripPrefix=1
+
+
+
+
