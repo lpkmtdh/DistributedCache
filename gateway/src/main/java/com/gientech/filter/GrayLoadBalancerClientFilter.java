@@ -23,6 +23,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.net.URI;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class GrayLoadBalancerClientFilter implements GlobalFilter, Ordered {
 
@@ -30,6 +31,8 @@ public class GrayLoadBalancerClientFilter implements GlobalFilter, Ordered {
     private static final int LOAD_BALANCER_CLIENT_FILTER_ORDER = 10150;
     private final LoadBalancerClientFactory clientFactory;
     private LoadBalancerProperties properties;
+
+    private AtomicInteger position = new AtomicInteger(1);
 
     public GrayLoadBalancerClientFilter(LoadBalancerClientFactory clientFactory, LoadBalancerProperties properties) {
         this.clientFactory = clientFactory;
@@ -78,7 +81,7 @@ public class GrayLoadBalancerClientFilter implements GlobalFilter, Ordered {
 
     private Mono<Response<ServiceInstance>> choose(ServerWebExchange exchange) {
         URI uri = (URI)exchange.getAttribute(ServerWebExchangeUtils.GATEWAY_REQUEST_URL_ATTR);
-        GrayLoadBalancer loadBalancer = new GrayLoadBalancer(clientFactory.getLazyProvider(uri.getHost(), ServiceInstanceListSupplier.class), uri.getHost());
+        GrayLoadBalancer loadBalancer = new GrayLoadBalancer(clientFactory.getLazyProvider(uri.getHost(), ServiceInstanceListSupplier.class), uri.getHost(),Math.abs(position.incrementAndGet()));
         if (loadBalancer == null) {
             throw new NotFoundException("No loadbalancer available for " + uri.getHost());
         } else {
